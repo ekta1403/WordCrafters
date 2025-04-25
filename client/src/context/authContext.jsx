@@ -1,71 +1,9 @@
-// import axios from "axios";
-// import { createContext, useEffect, useState } from "react";
-
-// // eslint-disable-next-line react-refresh/only-export-components
-// export const AuthContext = createContext();
-
-// export const AuthContextProvider = ({ children }) => {
-
-//     const [currentUser, setCurrentUser] = useState(() => {
-//         try {
-//             const savedUser = localStorage.getItem("user");
-//             return savedUser ? JSON.parse(savedUser) : null;
-//         } catch (e) {
-//             console.error("Error parsing user data from localStorage", e);
-//             return null;
-//         }
-//     });
-
-//     useEffect(() => {
-//         const savedUser = localStorage.getItem("user");
-//         if (savedUser) {
-//             setCurrentUser(JSON.parse(savedUser));
-//         }
-//     }, []);
-
-//     const login = async (inputs) => {
-//         try {
-//             const res = await axios.post("/api/auth/login", inputs, { withCredentials: true });
-//             localStorage.setItem("user", JSON.stringify(res.data.user));
-//             localStorage.setItem("AccessToken", res.data.accessToken);
-
-//             setCurrentUser(res.data.user);
-
-//         } catch (err) {
-//             console.error("Login failed", err);
-//         }
-//     };
-
-//     const logout = async () => {
-//         try {
-//             // const token = localStorage.getItem("AccessToken");
-//             // console.log("Sending token for logout:", AccessToken);
-
-//             await axios.post("/api/auth/logout", {}, {
-//                 withCredentials: true,
-//                 headers: { Authorization: `Bearer ${localStorage.getItem("AccessToken")}` },
-//             });
-
-//             localStorage.removeItem("user");
-//             localStorage.removeItem("AccessToken");
-//             setCurrentUser(null);
-//         } catch (err) {
-//             console.error("Logout failed:", err.response ? err.response.data : err.message);
-//         }
-//     };
-
-//     return (
-//         <AuthContext.Provider value={{ currentUser, login, logout }}>
-//             {children}
-//         </AuthContext.Provider>
-//     );
-// };
+// /context/authContext.jsx
 
 import axios from "axios";
 import { createContext, useEffect, useState } from "react";
 import Cookies from "js-cookie";
 
-// eslint-disable-next-line react-refresh/only-export-components
 export const AuthContext = createContext();
 
 export const AuthContextProvider = ({ children }) => {
@@ -103,21 +41,24 @@ export const AuthContextProvider = ({ children }) => {
         localStorage.setItem("user", JSON.stringify(user));
         localStorage.setItem("AccessToken", accessToken);
         setCurrentUser(user);
+        return { success: true };
       } else {
-        console.error("Login response is missing expected data:", res.data);
+        return { success: false, message: "Invalid server response." };
       }
     } catch (err) {
-      console.error("Login failed", err);
+      console.error("Login error:", err.response?.data || err.message);
+      return {
+        success: false,
+        message: err.response?.data || "Login failed",
+      };
     }
   };
 
   const logout = async () => {
     try {
-      const token = localStorage.getItem("AccessToken"); 
+      const token = localStorage.getItem("AccessToken");
       if (!token) {
-        console.warn(
-          "No token found in localStorage, skipping logout request."
-        );
+        console.warn("No token found in localStorage.");
       } else {
         await axios.post(
           "http://localhost:5000/api/auth/logout",
@@ -129,17 +70,12 @@ export const AuthContextProvider = ({ children }) => {
         );
       }
 
-      // Clear user data from localStorage
       localStorage.removeItem("user");
       localStorage.removeItem("AccessToken");
       Cookies.remove("accessToken", { path: '/' });
-      
       setCurrentUser(null);
     } catch (err) {
-      console.error(
-        "Logout failed:",
-        err.response ? err.response.data : err.message
-      );
+      console.error("Logout failed:", err.response?.data || err.message);
     }
   };
 

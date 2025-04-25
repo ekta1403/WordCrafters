@@ -3,8 +3,21 @@ import pool from "../config/db.js";
 // Find User Profile by User ID
 export const findUserProfileById = async (userId) => {
   const [profile] = await pool.query(
-      `SELECT *, DATE(JoinYear) AS joinDate FROM user_profiles WHERE user_id = ?`, 
-      [userId]
+    `SELECT 
+  users.id, 
+  users.F_name, 
+  users.L_name, 
+  users.email, 
+  profile.profile_picture, 
+  profile.bio, 
+  profile.role, 
+  profile.location, 
+  profile.website
+FROM users
+LEFT JOIN profile ON users.id = profile.user_id
+WHERE users.id = ?;
+`,
+    [userId]
   );
   return profile.length ? profile[0] : null;
 };

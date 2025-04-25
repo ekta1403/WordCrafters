@@ -154,15 +154,16 @@ const Register = () => {
                 Sign up
               </Link>
 
-              <div className="d-flex mt-3 text-secondary">
+              <div
+                 className="d-flex mt-3 text-secondary">
                 Already got an account?
-                <a
-                  href="#"
+                <Link
+                to="/login"
                   className="text-decoration-none fw-bold "
                   style={{ color: "#7b2cbf" }}
                 >
                    Log in
-                </a>
+                </Link>
               </div>
               <div className="d-flex flex-wrap mt-3 text-secondary">
                 By creating an account, you accept our{"   "}

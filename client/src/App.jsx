@@ -5,6 +5,8 @@ import Register from "./pages/Register";
 import Navbar from "./components/Navbar";
 import Profile from "./pages/Profile";
 import Session from "./components/Session";
+import Marketplace from "./components/Marketplace";
+import Projects from "./components/Projects";
 
 
 const Layout = () => {
@@ -29,7 +31,9 @@ const router = createBrowserRouter([
       { path: "/", element: <Session /> },
       { path: "/login", element: <Login /> },
       { path: "/register", element: <Register /> },
-      { path: "/profile/:id", element: <Profile /> },
+      { path: "/profile", element: <Profile /> },
+      { path: "/marketplace", element: <Marketplace /> },
+      { path: "/projects", element: <Projects /> },
     ],
   },
 ]);

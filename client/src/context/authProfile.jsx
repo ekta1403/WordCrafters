@@ -30,7 +30,7 @@ export const ProfileContextProvider = ({ children }) => {
         return;
       }
 
-      const res = await axios.get(`http://localhost:8800/api/users/profile/${userId}`, {
+      const res = await axios.get(`http://localhost:5000/api/users/profile/${userId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -49,7 +49,7 @@ export const ProfileContextProvider = ({ children }) => {
         return;
       }
 
-      const res = await axios.put(`http://localhost:8800/api/users/profile/${userId}`, profileData, {
+      const res = await axios.put(`http://localhost:5000/api/users/profile/${userId}`, profileData, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -71,7 +71,7 @@ export const ProfileContextProvider = ({ children }) => {
         return;
       }
 
-      const res = await axios.post(`http://localhost:8800/api/users/profile/${userId}/upload`, formData, {
+      const res = await axios.post(`http://localhost:5000/api/users/profile/${userId}/upload`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data",

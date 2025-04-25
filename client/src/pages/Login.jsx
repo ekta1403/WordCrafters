@@ -1,10 +1,10 @@
 import React, { useState, useContext } from "react";
-
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/authContext";
 
 const Login = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
+  const [error, setError] = useState("");
   const navigate = useNavigate();
   const { login } = useContext(AuthContext);
 
@@ -14,8 +14,14 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await login(formData);
-    navigate("/");
+    setError("");
+
+    const result = await login(formData);
+    if (result.success) {
+      navigate("/profile");
+    } else {
+      setError("Invalid email or password");
+    }
   };
 
   return (
@@ -28,40 +34,19 @@ const Login = () => {
           <div className="col-md-6 d-flex align-items-center">
             <div className="w-100 px-4">
               <h2 className="fw-bold text-dark">
-                WordCrafters
+                WordCrafters{" "}
                 <span className="fw-bold" style={{ color: "#7b2cbf" }}>
-                  {" "}
                   marketplace
                 </span>
               </h2>
 
-              <h3 className="fw-bold mt-3">
-                Welcome back{" "}
-                <span role="img" aria-label="wave">
-                  👋
-                </span>
-              </h3>
+              <h3 className="fw-bold mt-3">Welcome back 👋</h3>
               <p className="text-secondary">
                 Continue with your social account:
               </p>
 
               <div className="d-flex gap-3">
-                <button
-                  className="btn btn-light border w-50"
-                  style={{
-                    backgroundColor: "#FFFFFF",
-                    color: "#5F6368",
-                    border: "1px solid #DADCE0",
-                    padding: "8px 16px",
-                    borderRadius: "5px",
-                    fontWeight: "bold",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    gap: "8px",
-                    cursor: "pointer",
-                  }}
-                >
+                <button className="btn btn-light border w-50">
                   <img
                     src="https://cdn-icons-png.freepik.com/256/13170/13170545.png"
                     alt="Google"
@@ -70,22 +55,7 @@ const Login = () => {
                   />
                   Google
                 </button>
-                <button
-                  className="btn btn-primary w-50"
-                  style={{
-                    backgroundColor: "#1877F2",
-                    color: "white",
-                    padding: "8px 16px",
-                    borderRadius: "5px",
-                    fontWeight: "bold",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    gap: "8px",
-                    cursor: "pointer",
-                    border: "none",
-                  }}
-                >
+                <button className="btn btn-primary w-50">
                   <img
                     src="https://cdn-icons-png.freepik.com/256/12942/12942327.png"
                     alt="Facebook"
@@ -99,38 +69,45 @@ const Login = () => {
               <p className="text-secondary mt-3">
                 Or log in with your WordCrafters account:
               </p>
-              <input
-                type="email"
-                name="email"
-                className="form-control my-2"
-                placeholder="Enter your email..."
-                onChange={handleChange}
-                required
-              />
-              <input
-                type="password"
-                name="password"
-                className="form-control my-2"
-                placeholder="Password..."
-                onChange={handleChange}
-                required
-              />
+              <form onSubmit={handleSubmit}>
+                <input
+                  type="email"
+                  name="email"
+                  className="form-control my-2"
+                  placeholder="Enter your email..."
+                  onChange={handleChange}
+                  required
+                />
+                <input
+                  type="password"
+                  name="password"
+                  className="form-control my-2"
+                  placeholder="Password..."
+                  onChange={handleChange}
+                  required
+                />
+                <button
+                  type="submit"
+                  className="btn w-100"
+                  style={{
+                    backgroundColor: "#7b2cbf",
+                    color: "white",
+                    fontWeight: "500",
+                    border: "none",
+                    padding: "5px 15px",
+                    borderRadius: "8px",
+                    cursor: "pointer",
+                  }}
+                >
+                  Log in
+                </button>
+              </form>
 
-              <button
-                className="btn w-100"
-                onClick={handleSubmit}
-                style={{
-                  backgroundColor: "#7b2cbf",
-                  color: "white",
-                  fontWeight: "500",
-                  border: "none",
-                  padding: "5px 15px",
-                  borderRadius: "8px",
-                  cursor: "pointer",
-                }}
-              >
-                Log in
-              </button>
+              {error && (
+                <p className="text-danger mt-2" style={{ fontWeight: 500 }}>
+                  {error?.message }
+                </p>
+              )}
 
               <div className="d-flex justify-content-between mt-3 text-secondary">
                 <a href="#" className="text-decoration-none text-secondary">

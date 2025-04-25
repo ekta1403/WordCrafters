@@ -1,97 +1,191 @@
-import React, { useContext, useEffect, useState } from "react";
-import axios from "axios";
-import { AuthContext } from "../context/authContext";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import Marketplace from "../components/Marketplace.jsx";
+import Projects from "../components/Projects.jsx";
 
-function Profile() {
-  const { currentUser } = useContext(AuthContext);
-  const [profile, setProfile] = useState(null);
-  const [loading, setLoading] = useState(true);
+const ProfileNavbar = () => {
+  const navigate = useNavigate();
+  const [user, setUser] = useState(null);
+  const [activeComponent, setActiveComponent] = useState("marketplace");
 
   useEffect(() => {
-    const fetchProfileData = async () => {
-      try {
-        if (!currentUser || !currentUser.id) {
-          console.error("No authenticated user found.");
-          setLoading(false);
-          return;
-        }
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+  }, []);
 
-        const token = localStorage.getItem("token");
-        if (!token) {
-          console.error("No access token found. User is not authenticated.");
-          setLoading(false);
-          return;
-        }
+  const handleLogout = () => {
+    localStorage.removeItem("AccessToken");
+    localStorage.removeItem("user");
+    navigate("/");
+  };
 
-        const response = await axios.get(
-          `http://localhost:5000/api/auth/profile/${currentUser.id}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-
-        setProfile(response.data);
-      } catch (error) {
-        console.error("Error fetching profile data:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchProfileData();
-  }, [currentUser]);
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (!profile) {
-    return <div>No profile data available.</div>;
-  }
+  const getInitials = (fname, lname) => {
+    return `${fname?.[0] || ""}${lname?.[0] || ""}`.toUpperCase();
+  };
 
   return (
-    <div className="d-flex justify-content-center align-items-center vh-100 bg-light">
-    <div className="card shadow-lg p-4" style={{ width: "400px", borderRadius: "12px" }}>
-      {/* Profile Header */}
-      <div className="text-center">
-        <img
-          className="rounded-circle border border-primary"
-          src={profile.profile_picture || "https://via.placeholder.com/150"}
-          alt="Profile"
-          width="120"
-          height="120"
-        />
-      </div>
+    <>
+      <nav
+        className="navbar navbar-expand-lg sticky-top px-4 py-2 "
+        style={{ backgroundColor: "#26343f" }}
+      >
+        <div
+          className="container d-flex justify-content-between"
+          style={{ maxWidth: "1080px" }}
+        >
+          <Link className="navbar-brand fw-bold text-white" to="/">
+            WordCrafters
+          </Link>
 
-      {/* Profile Info */}
-      <div className="text-center mt-3">
-        <h2 className="fw-bold">{profile.full_name || "Profile Name"}</h2>
-        <p className="text-muted">@{profile.username || "username"}</p>
-        <p className="text-secondary">{profile.bio || "No bio available."}</p>
-      </div>
+          <div className="d-none d-lg-flex gap-4 ">
+            <Link
+              className={`nav-link text-white btn btn-link ${
+                activeComponent === "marketplace"
+                  ? "border-bottom fw-bold"
+                  : ""
+              }`}
+              to="#"
+              onClick={(e) => {
+                e.preventDefault();
+                setActiveComponent("marketplace");
+              }}
+            >
+              Marketplace
+            </Link>
 
-      {/* Other Info */}
-      <ul className="list-group list-group-flush">
-        <li className="list-group-item"><strong>City:</strong> {profile.location || "Not specified"}</li>
-        <li className="list-group-item">
-          <strong>Website:</strong>{" "}
-          {profile.website ? (
-            <a href={profile.website} target="_blank" rel="noopener noreferrer">
-              {profile.website}
-            </a>
-          ) : (
-            "Not provided"
-          )}
-        </li>
-        <li className="list-group-item">
-          <strong>Joined:</strong> {profile.joinDate?.split("T")[0] || "Unknown"}
-        </li>
-      </ul>
-    </div>
-  </div>
+            <Link
+              className={`nav-link text-white btn btn-link ${
+                activeComponent === "Projects"
+                  ? "border-bottom border-1 border-white fw-bold"
+                  : ""
+              }`}
+              to="#"
+              onClick={(e) => {
+                e.preventDefault();
+                setActiveComponent("Projects");
+              }}
+            >
+              Projects
+            </Link>
+            <Link className="nav-link text-white" to="/app">
+              Books
+            </Link>
+            <Link className="nav-link text-white" to="/tools">
+              Learning
+            </Link>
+            <Link className="nav-link text-white" to="/about">
+              Help
+            </Link>
+          </div>
+
+          <div className="d-flex align-items-center gap-3">
+            <button className="btn btn-outline-light btn-sm rounded-circle">
+              <i className="bi bi-bell"></i>
+            </button>
+            <button className="btn btn-outline-light btn-sm rounded-circle">
+              <i className="bi bi-envelope"></i>
+            </button>
+
+            {/* Profile  */}
+            {user ? (
+              <div className="dropdown">
+                <button
+                  className="btn d-flex align-items-center gap-1 w-auto  rounded-pill "
+                  style={{
+                    backgroundColor: "#455a64",
+                    color: "white",
+                    padding: "2px",
+                  }}
+                  type="button"
+                  id="profileDropdown"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  {/* Profile initials or image */}
+                  {user.profile_picture ? (
+                    <img
+                      src={user.profile_picture}
+                      alt="Profile"
+                      style={{
+                        width: "30px",
+                        height: "30px",
+                        borderRadius: "50%",
+                        objectFit: "cover",
+                      }}
+                    />
+                  ) : (
+                    <div
+                      style={{
+                        width: "35px",
+                        height: "30px",
+                        borderRadius: "50%",
+                        backgroundColor: "#c5cae9",
+                        color: "#fff",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        fontWeight: "bold",
+                        fontSize: ".8rem",
+                      }}
+                    >
+                      {getInitials(user.F_name, user.L_name)}
+                    </div>
+                  )}
+                  {/* Name */}
+                  <span className="fw-bold">
+                    {user.F_name.charAt(0).toUpperCase() +
+                      user.F_name.slice(1).toLowerCase()}
+                  </span>
+
+                  {/* Bootstrap dropdown caret will auto-appear */}
+                </button>
+                <ul
+                  className="dropdown-menu dropdown-menu-end shadow rounded"
+                  aria-labelledby="profileDropdown"
+                  style={{ minWidth: 220 }}
+                >
+                  <li className="px-3 py-2">
+                    <div className="fw-semibold">
+                      {user.F_name} {user.L_name}
+                    </div>
+                    {user.email && (
+                      <small className="text-muted">{user.email}</small>
+                    )}
+                  </li>
+                  <li>
+                    <hr className="dropdown-divider" />
+                  </li>
+                  <li>
+                    <Link className="dropdown-item" to="/profile">
+                      My Profile
+                    </Link>
+                  </li>
+                  <li>
+                    <button className="dropdown-item" onClick={handleLogout}>
+                      Logout
+                    </button>
+                  </li>
+                </ul>
+              </div>
+            ) : (
+              <Link to="/login" className="btn btn-primary">
+                Login
+              </Link>
+            )}
+          </div>
+        </div>
+      </nav>
+
+      <div>
+        <div className="content">
+          {activeComponent === "marketplace" && <Marketplace />}
+          {activeComponent === "Projects" && <Projects />}
+        </div>
+      </div>
+    </>
   );
-}
+};
 
-export default Profile;
+export default ProfileNavbar;

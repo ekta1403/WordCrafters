@@ -62,7 +62,7 @@ export const loginUser = async (req, res) => {
     const cookieOptions = {
       httpOnly: true,
       sameSite: "None",
-      secure: false,
+      secure:false
     };
 
 

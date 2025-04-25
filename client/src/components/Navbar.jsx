@@ -1,14 +1,14 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, {  useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../context/authContext";
 
 const Navbar = () => {
-  const { currentUser, logout } = useContext(AuthContext);
+  // const { currentUser, logout } = useContext(AuthContext);
   const [scrolled, setScrolled] = useState(false);
 
-  const handleLogout = async () => {
-    await logout();
-  };
+  // const handleLogout = async () => {
+  //   await logout();
+  // };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -82,24 +82,7 @@ const Navbar = () => {
             </li>
           </ul>
         </div>
-
-        {currentUser ? (
-          <button
-            onClick={handleLogout}
-            className="btn"
-            style={{
-              backgroundColor: "#7b2cbf",
-              color: "white",
-              fontWeight: "500",
-              border: "none",
-              padding: "5px 15px",
-              borderRadius: "8px",
-              cursor: "pointer",
-            }}
-          >
-            Logout
-          </button>
-        ) : (
+     
           <Link
             to="/login"
             className="btn"
@@ -115,7 +98,7 @@ const Navbar = () => {
           >
             Log In
           </Link>
-        )}
+      
       </div>
     </nav>
   );
