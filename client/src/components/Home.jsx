@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Session from "./Session";
+// import "../style/Home.css"
 
 function Home() {
   const [currentImage, setCurrentImage] = useState(0);
@@ -30,21 +31,22 @@ function Home() {
         style={{
           backgroundColor: colors[currentColor],
           display: "flex",
-          flexWrap: "wrap",
+          // flexWrap: "wrap",
           alignItems: "center",
           justifyContent: "center",
-          padding: "50px 5%",
-          minHeight: "10vh",
+          padding: "1px  10%",
+          maxHeight: "65vh",
           width: "100%",
         }}
       >
         {/* Left Content */}
-        <div
+        <div className="flex justify-content-center align-items-center"
           style={{
             flex: 1,
             minWidth: "300px",
             maxWidth: "600px",
-            margin: "150px",
+            marginTop: "100px",
+            marginLeft:"30px"
           }}
         >
           <h1 style={{ fontSize: "3rem", fontWeight: "bold", color: "#333" }}>
@@ -129,8 +131,9 @@ function Home() {
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
-            minWidth: "300px",
-            margin: "50px",
+            maxWidth: "55vh",
+            marginLeft: "150px",
+            marginTop: "140px",
           }}
         >
           <img

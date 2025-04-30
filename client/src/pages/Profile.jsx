@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Marketplace from "../components/Marketplace.jsx";
 import Projects from "../components/Projects.jsx";
+import Books from "../components/Books.jsx";
+import Learning from "../components/Learning.jsx";
 
 const ProfileNavbar = () => {
   const navigate = useNavigate();
@@ -42,9 +44,7 @@ const ProfileNavbar = () => {
           <div className="d-none d-lg-flex gap-4 ">
             <Link
               className={`nav-link text-white btn btn-link ${
-                activeComponent === "marketplace"
-                  ? "border-bottom fw-bold"
-                  : ""
+                activeComponent === "marketplace" ? " fw-bold" : ""
               }`}
               to="#"
               onClick={(e) => {
@@ -57,9 +57,7 @@ const ProfileNavbar = () => {
 
             <Link
               className={`nav-link text-white btn btn-link ${
-                activeComponent === "Projects"
-                  ? "border-bottom border-1 border-white fw-bold"
-                  : ""
+                activeComponent === "Projects" ? " fw-bold" : ""
               }`}
               to="#"
               onClick={(e) => {
@@ -69,10 +67,26 @@ const ProfileNavbar = () => {
             >
               Projects
             </Link>
-            <Link className="nav-link text-white" to="/app">
+            <Link
+              className={`nav-link text-white btn btn-link ${
+                activeComponent === "Books"
+                  ? "fw-bold"
+                  : ""
+              }`}
+              to="#"
+              onClick={(e) => {
+                e.preventDefault();
+                setActiveComponent("Books");
+              }}
+            >
               Books
             </Link>
-            <Link className="nav-link text-white" to="/tools">
+            <Link className={`nav-link text-white ${
+              activeComponent === "Learning" ? "fw-bold":""
+            }`} to="#" onClick={(e) =>{
+              e.preventDefault();
+              setActiveComponent("Learning")
+            }}>
               Learning
             </Link>
             <Link className="nav-link text-white" to="/about">
@@ -182,6 +196,8 @@ const ProfileNavbar = () => {
         <div className="content">
           {activeComponent === "marketplace" && <Marketplace />}
           {activeComponent === "Projects" && <Projects />}
+          {activeComponent === "Books" && <Books />}
+          {activeComponent === "Learning" && <Learning />}
         </div>
       </div>
     </>

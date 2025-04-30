@@ -1,10 +1,11 @@
-import React, {  useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../context/authContext";
 
 const Navbar = () => {
   // const { currentUser, logout } = useContext(AuthContext);
   const [scrolled, setScrolled] = useState(false);
+  const [activeComponent, setActiveComponent] = useState("connect");
 
   // const handleLogout = async () => {
   //   await logout();
@@ -56,49 +57,96 @@ const Navbar = () => {
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav ms-auto">
             <li className="nav-item mx-3">
-              <Link className="nav-link active" to="#">
+              {/* <Link className="nav-link active" to="/">
+                Connect
+              </Link> */}
+
+              <Link
+                className={`nav-link  btn btn-link ${
+                  activeComponent === "Connect" ? " fw-bold " : ""
+                }`}
+                to="/"
+                onClick={() => {
+                  // e.preventDefault();
+                  setActiveComponent("Connect");
+                }}
+              >
                 Connect
               </Link>
             </li>
             <li className="nav-item mx-3">
-              <Link className="nav-link" to="#">
+              {/* <Link className="nav-link" to="/blog">
+                Blog
+              </Link> */}
+              <Link
+                className={`nav-link  btn btn-link ${
+                  activeComponent === "Blog" ? " fw-bold" : ""
+                }`}
+                to="/blog"
+                onClick={() => {
+                  setActiveComponent("Blog");
+                }}
+              >
                 Blog
               </Link>
             </li>
             <li className="nav-item mx-3">
-              <Link className="nav-link" to="#">
+              <Link
+                className={`nav-link  btn btn-link ${
+                  activeComponent === "App" ? " fw-bold" : ""
+                }`}
+                to="/app"
+                onClick={() => {
+                  setActiveComponent("App");
+                }}
+              >
                 App
               </Link>
             </li>
             <li className="nav-item mx-3">
-              <Link className="nav-link" to="#">
+              <Link
+                className={`nav-link  btn btn-link ${
+                  activeComponent === "Tools" ? " fw-bold" : ""
+                }`}
+                to="/tools"
+                onClick={() => {
+                  setActiveComponent("Tools");
+                }}
+              >
                 Tools
               </Link>
             </li>
             <li className="nav-item mx-3">
-              <Link className="nav-link" to="#">
+              <Link
+                className={`nav-link  btn btn-link ${
+                  activeComponent === "About" ? " fw-bold" : ""
+                }`}
+                to="/about"
+                onClick={() => {
+                  setActiveComponent("About");
+                }}
+              >
                 About
               </Link>
             </li>
           </ul>
         </div>
-     
-          <Link
-            to="/login"
-            className="btn"
-            style={{
-              backgroundColor: "#7b2cbf",
-              color: "white",
-              fontWeight: "500",
-              border: "none",
-              padding: "5px 15px",
-              borderRadius: "8px",
-              cursor: "pointer",
-            }}
-          >
-            Log In
-          </Link>
-      
+
+        <Link
+          to="/login"
+          className="btn"
+          style={{
+            backgroundColor: "#7b2cbf",
+            color: "white",
+            fontWeight: "500",
+            border: "none",
+            padding: "5px 15px",
+            borderRadius: "8px",
+            cursor: "pointer",
+          }}
+        >
+          Log In
+        </Link>
       </div>
     </nav>
   );

@@ -65,9 +65,7 @@ export const loginUser = async (req, res) => {
       secure:false
     };
 
-
      const { password: _, refreshToken: __, ...userWithoutPassword } = user;
-
 
     return res
     .status(200)

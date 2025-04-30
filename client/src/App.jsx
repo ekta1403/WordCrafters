@@ -5,9 +5,7 @@ import Register from "./pages/Register";
 import Navbar from "./components/Navbar";
 import Profile from "./pages/Profile";
 import Session from "./components/Session";
-import Marketplace from "./components/Marketplace";
-import Projects from "./components/Projects";
-
+import Blog from "./pages/Blog"
 
 const Layout = () => {
   const location = useLocation();
@@ -29,11 +27,11 @@ const router = createBrowserRouter([
     children: [
       { path: "/", element: <Home /> },
       { path: "/", element: <Session /> },
+      { path: "/blog", element: <Blog/> },
       { path: "/login", element: <Login /> },
       { path: "/register", element: <Register /> },
       { path: "/profile", element: <Profile /> },
-      { path: "/marketplace", element: <Marketplace /> },
-      { path: "/projects", element: <Projects /> },
+      
     ],
   },
 ]);
