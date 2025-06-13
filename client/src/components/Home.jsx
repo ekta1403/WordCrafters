@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Session from "./Session";
-// import "../style/Home.css"
+import "../style/Home.css";
+
 
 function Home() {
   const [currentImage, setCurrentImage] = useState(0);
@@ -23,127 +24,55 @@ function Home() {
       setCurrentColor((prev) => (prev + 1) % colors.length);
     }, 3000);
     return () => clearInterval(interval);
-  }, [images.length, words.length, colors.length]);
+  }, []);
 
   return (
     <>
       <div
-        style={{
-          backgroundColor: colors[currentColor],
-          display: "flex",
-          // flexWrap: "wrap",
-          alignItems: "center",
-          justifyContent: "center",
-          padding: "1px  10%",
-          maxHeight: "65vh",
-          width: "100%",
-        }}
+        className="home-container"
+        style={{ "--bg-color": colors[currentColor] }}
       >
         {/* Left Content */}
-        <div className="flex justify-content-center align-items-center"
-          style={{
-            flex: 1,
-            minWidth: "300px",
-            maxWidth: "600px",
-            marginTop: "100px",
-            marginLeft:"30px"
-          }}
-        >
-          <h1 style={{ fontSize: "3rem", fontWeight: "bold", color: "#333" }}>
+        <div className="home-left">
+          <h1 className="home-heading">
             Where beautiful <br />
-            <span className="typed-text" style={{ color: "#7b2cbf" }}>
+            <span style={{ color: "#7b2cbf" }}>
               {words[currentWordIndex]}
             </span>{" "}
             books <br /> are made
           </h1>
-          <p style={{ fontSize: "1.34rem", color: "#555", marginTop: "15px" }}>
+          <p className="home-paragraph">
             Meet the editor, designer, or marketer who can help bring your book
             to life.
           </p>
 
-          {/* Email Form */}
-          <form
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "10px",
-              marginTop: "20px",
-            }}
-          >
+         
+          <form className="home-form">
             <input
               type="email"
               placeholder="Enter your email..."
               required
-              style={{
-                padding: "12px",
-                border: "1px solid #ccc",
-                borderRadius: "5px",
-                flex: 1,
-                fontSize: "1rem",
-              }}
+              className="home-input"
             />
-            <button
-              type="submit"
-              style={{
-                padding: "12px 20px",
-                backgroundColor: "#7b2cbf",
-                color: "white",
-                fontSize: "1rem",
-                border: "none",
-                borderRadius: "5px",
-                cursor: "pointer",
-                transition: "background 0.3s",
-              }}
-            >
+            <button type="submit" className="home-button">
               Get started
             </button>
           </form>
 
           {/* Social Signup */}
-          <p className=" mt-2" style={{ fontSize: "1rem", color: "#555" }}>
+          <p className="home-social">
             Sign up with{" "}
-            <span
-              style={{
-                color: "#1877F2",
-                cursor: "pointer",
-                fontWeight: "bold",
-              }}
-            >
-              Facebook
-            </span>{" "}
-            or{" "}
-            <span
-              style={{
-                color: "#DB4437",
-                cursor: "pointer",
-                fontWeight: "bold",
-              }}
-            >
-              Google
-            </span>
+            <span className="facebook">Facebook</span> or{" "}
+            <span className="google">Google</span>
           </p>
         </div>
 
         {/* Right Content - Image */}
-        <div
-          style={{
-            flex: 1,
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            maxWidth: "55vh",
-            marginLeft: "150px",
-            marginTop: "140px",
-          }}
-        >
+        <div className="home-right">
           <img
             src={images[currentImage]}
             alt="Book Category"
-            style={{
-              maxWidth: "90%",
-              height: "auto",
-              transition: "opacity 0.5s ease-in-out",
-            }}
+            className="home-image"
           />
         </div>
       </div>

@@ -1,5 +1,5 @@
 import express from "express";
-import { registerUser, loginUser, logoutUser } from "../controllers/authController.js";
+import { registerUser, loginUser, logoutUser, refreshAccessToken } from "../controllers/authController.js";
 import { VERIFY_ACCESS_TOKEN } from "../middleware/jwtAuth.js";
 import {
     getProfile,
@@ -14,10 +14,11 @@ const router = express.Router();
 router.post("/register", registerUser);
 router.post("/login", loginUser);
 router.post("/logout", VERIFY_ACCESS_TOKEN, logoutUser);
+router.post("/refresh-token", refreshAccessToken);
 
 
 /* User Profile Routes */
-router.get("/profile/:userId",  getProfile);
+router.get("/profile/:userId", getProfile);
 router.put("/profile/:userId", VERIFY_ACCESS_TOKEN, updateProfile);
 router.post("/profile/:userId/upload", VERIFY_ACCESS_TOKEN, upload.single("profilePicture"), uploadProfilePicture);
 

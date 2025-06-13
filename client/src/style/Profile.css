@@ -1,0 +1,17 @@
+.navbar-brand{
+  color: #f4f3f5 !important;
+  font-weight: 700;
+  font-size: 1.3rem;
+  text-decoration: none;
+}
+
+.navbar .btn {
+  background-color: transparent;
+  color: white;
+  font-weight: 600;
+  border: none;
+  padding: 5px 15px;
+  border-radius: 6px;
+  white-space: nowrap;
+  margin: 0px;
+}

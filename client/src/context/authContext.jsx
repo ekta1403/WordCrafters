@@ -72,7 +72,7 @@ export const AuthContextProvider = ({ children }) => {
 
       localStorage.removeItem("user");
       localStorage.removeItem("AccessToken");
-      Cookies.remove("accessToken", { path: '/' });
+      Cookies.remove("accessToken");
       setCurrentUser(null);
     } catch (err) {
       console.error("Logout failed:", err.response?.data || err.message);

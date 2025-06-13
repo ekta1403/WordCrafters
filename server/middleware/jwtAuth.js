@@ -21,13 +21,12 @@ export const generateAccessToken = (user) => {
     };
     const token = jwt.sign(payload, JWT_ACCESS_SECRET,
         {
-            expiresIn : '1d'
+            expiresIn : '10seconds'
         }
     );
     return token;
 }
- 
- 
+
  
 //GENERATE REFRESH TOKEN(long-live)
 export const generateRefreshToken = (user) => {
@@ -44,8 +43,6 @@ export const generateRefreshToken = (user) => {
     );
     return token;
 }
- 
- 
  
 //VERIFY ACCESS TOKEN
 export const VERIFY_ACCESS_TOKEN = (req, res, next) => {
@@ -67,9 +64,6 @@ export const VERIFY_ACCESS_TOKEN = (req, res, next) => {
   };
   
   
- 
- 
- 
 //VERIFY REFRESH TOKEN
 export const VERIFY_REFRESH_TOKEN = (req, res, next) => {
     const token = req.cookies.refreshToken;

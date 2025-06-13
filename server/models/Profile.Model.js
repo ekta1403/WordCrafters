@@ -8,13 +8,13 @@ export const findUserProfileById = async (userId) => {
   users.F_name, 
   users.L_name, 
   users.email, 
-  profile.profile_picture, 
-  profile.bio, 
-  profile.role, 
-  profile.location, 
-  profile.website
+  up.profile_picture, 
+  up.bio, 
+  up.role, 
+  up.location, 
+  up.website
 FROM users
-LEFT JOIN profile ON users.id = profile.user_id
+LEFT JOIN user_profiles as up ON users.id = up.user_id
 WHERE users.id = ?;
 `,
     [userId]

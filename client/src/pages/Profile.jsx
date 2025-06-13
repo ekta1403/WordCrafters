@@ -1,14 +1,19 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import Marketplace from "../components/Marketplace.jsx";
+import Marketplace from "./Marketplace.jsx";
 import Projects from "../components/Projects.jsx";
-import Books from "../components/Books.jsx";
-import Learning from "../components/Learning.jsx";
+import Books from "./Books.jsx";
+import Learning from "./Learning.jsx";
+import "../style/profile.css";
+// import { logoutUser } from "../../../server/controllers/authController.js";
+import { AuthContext } from "../context/authContext.jsx";
+import { useContext } from "react";
 
 const ProfileNavbar = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const [activeComponent, setActiveComponent] = useState("marketplace");
+  const { logout } = useContext(AuthContext);
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -17,10 +22,16 @@ const ProfileNavbar = () => {
     }
   }, []);
 
-  const handleLogout = () => {
-    localStorage.removeItem("AccessToken");
-    localStorage.removeItem("user");
-    navigate("/");
+  const handleLogout = async () => {
+    // localStorage.removeItem("AccessToken");
+    // localStorage.removeItem("user");
+    // navigate("/");
+    try {
+      await logout();
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const getInitials = (fname, lname) => {
@@ -69,9 +80,7 @@ const ProfileNavbar = () => {
             </Link>
             <Link
               className={`nav-link text-white btn btn-link ${
-                activeComponent === "Books"
-                  ? "fw-bold"
-                  : ""
+                activeComponent === "Books" ? "fw-bold" : ""
               }`}
               to="#"
               onClick={(e) => {
@@ -81,15 +90,19 @@ const ProfileNavbar = () => {
             >
               Books
             </Link>
-            <Link className={`nav-link text-white ${
-              activeComponent === "Learning" ? "fw-bold":""
-            }`} to="#" onClick={(e) =>{
-              e.preventDefault();
-              setActiveComponent("Learning")
-            }}>
+            <Link
+              className={`nav-link text-white btn btn-link ${
+                activeComponent === "Learning" ? "fw-bold" : ""
+              }`}
+              to="#"
+              onClick={(e) => {
+                e.preventDefault();
+                setActiveComponent("Learning");
+              }}
+            >
               Learning
             </Link>
-            <Link className="nav-link text-white" to="/about">
+            <Link className="nav-link text-white btn btn-link" to="/about">
               Help
             </Link>
           </div>
@@ -106,11 +119,11 @@ const ProfileNavbar = () => {
             {user ? (
               <div className="dropdown">
                 <button
-                  className="btn d-flex align-items-center gap-1 w-auto  rounded-pill "
+                  className="btn d-flex align-items-center gap-1 w-auto rounded-pill"
                   style={{
                     backgroundColor: "#455a64",
                     color: "white",
-                    padding: "2px",
+                    padding: "1px 2px",
                   }}
                   type="button"
                   id="profileDropdown"
@@ -147,14 +160,17 @@ const ProfileNavbar = () => {
                       {getInitials(user.F_name, user.L_name)}
                     </div>
                   )}
-                  {/* Name */}
-                  <span className="fw-bold">
+
+                  {/* Name and caret */}
+                  <span className="fw-bold d-flex align-items-center">
                     {user.F_name.charAt(0).toUpperCase() +
                       user.F_name.slice(1).toLowerCase()}
+                    <span className="ms-1">
+                      <i className="bi bi-caret-down-fill"></i>
+                    </span>
                   </span>
-
-                  {/* Bootstrap dropdown caret will auto-appear */}
                 </button>
+
                 <ul
                   className="dropdown-menu dropdown-menu-end shadow rounded"
                   aria-labelledby="profileDropdown"
@@ -172,7 +188,7 @@ const ProfileNavbar = () => {
                     <hr className="dropdown-divider" />
                   </li>
                   <li>
-                    <Link className="dropdown-item" to="/profile">
+                    <Link className="dropdown-item" to="/myprofile">
                       My Profile
                     </Link>
                   </li>

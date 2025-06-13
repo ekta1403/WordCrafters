@@ -1,0 +1,117 @@
+
+/* .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: transparent;
+    padding: 10px 20px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  
+  .navbar-logo {
+    color: rgb(255, 255, 255);
+    font-size: 1.8rem;
+    font-weight: bold;
+    text-decoration: none;
+  }
+  
+  .navbar-menu {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+  }
+  
+  .navbar-menu a {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s;
+  }
+  
+  .navbar-menu a:hover {
+    color: #fbbf24;
+  }
+  
+  .navbar-login {
+    background-color: #a3e635;
+    color: black;
+    padding: 8px 15px;
+    border-radius: 5px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.3s;
+  }
+  
+  .navbar-login:hover {
+    background-color: #84cc16;
+  }
+  
+  .navbar-toggle {
+    display: none;
+    font-size: 1.8rem;
+    color: white;
+    cursor: pointer;
+  }
+   */
+  /* Responsive Navbar */
+  @media (max-width: 768px) {
+    .navbar-menu {
+      display: none;
+      flex-direction: column;
+      background: #22223b;
+      position: absolute;
+      top: 60px;
+      right: 0;
+      width: 200px;
+      padding: 10px;
+    }
+  
+    .navbar-menu.show {
+      display: flex;
+    }
+  
+    .navbar-toggle {
+      display: block;
+    }
+  }
+  
+  /* === Blog Banner Styles === */
+  .blog-banner {
+    position: relative;
+    background-color: #f3fcff;
+    padding: 40px 0;
+    text-align: center;
+    height: 341px;
+    overflow: hidden;
+  }
+  
+  .blog-banner img {
+    position: absolute;
+    top: 55px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 900px;
+    object-fit: cover;
+    z-index: 0;
+  }
+  
+  .blog-banner-content {
+    position: relative;
+    z-index: 1;
+    margin-top: 70px;
+  }
+  
+  .blog-banner-content h1 {
+    font-size: 34px;
+    color: #222;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+  
+  .blog-banner-content p {
+    font-size: 15px;
+    color: #333;
+  }
+  

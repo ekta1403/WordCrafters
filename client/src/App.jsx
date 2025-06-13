@@ -6,10 +6,12 @@ import Navbar from "./components/Navbar";
 import Profile from "./pages/Profile";
 import Session from "./components/Session";
 import Blog from "./pages/Blog"
+import Apppage from "./pages/Apppage"; 
+import ProfilePage from "./pages/ProfilePage";
 
 const Layout = () => {
   const location = useLocation();
-  const hideNavbarRoutes = ["/login", "/register", "/profile"]; 
+  const hideNavbarRoutes = ["/login", "/register", "/profile", "/myprofile"]; 
 
   return (
     <>
@@ -26,11 +28,14 @@ const router = createBrowserRouter([
     element: <Layout />,
     children: [
       { path: "/", element: <Home /> },
+      { path: "/connect", element: <Home /> },
       { path: "/", element: <Session /> },
       { path: "/blog", element: <Blog/> },
+      { path: "/app", element: <Apppage/> },
       { path: "/login", element: <Login /> },
       { path: "/register", element: <Register /> },
       { path: "/profile", element: <Profile /> },
+      { path: "/myprofile", element: <ProfilePage /> },
       
     ],
   },

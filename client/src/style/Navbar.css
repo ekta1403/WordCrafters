@@ -1,0 +1,67 @@
+.navbar {
+  padding: 0.8rem 1.5rem;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  z-index: 999;
+}
+
+.navbar-logo {
+  color: #7b2cbf !important;
+  font-weight: 700;
+  font-size: 1.3rem;
+  text-decoration: none;
+}
+
+
+/* .nav-link {
+  color: #333 !important;
+  font-weight: 500;
+  transition: color 0.3s ease;
+} */
+
+/* .nav-link:hover {
+  color: #7b2cbf !important;
+  text-decoration: underline;
+} */
+
+/* .nav-link.fw-bold {
+  color: #7b2cbf !important;
+} */
+
+/* Login button */
+.navbar .button {
+  background-color: #7b2cbf;
+  color: white;
+  font-weight: 600;
+  border: none;
+  padding: 5px 15px;
+  border-radius: 6px;
+  white-space: nowrap;
+  margin: 0px;
+  text-decoration: none;
+}
+
+/* Responsive styling */
+@media (max-width: 991.98px) {
+  .navbar-collapse {
+    background-color: #f0e6ff;
+    padding: 1rem;
+    border-radius: 10px;
+    margin-top: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .navbar-nav {
+    flex-direction: column;
+    align-items: flex-start;
+    
+  }
+
+  .nav-item {
+    margin: 0.5rem 0;
+  }
+
+  .navbar .btn {
+    margin-top: 1rem;
+    /* width: 100%; */
+  }
+}

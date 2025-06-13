@@ -40,7 +40,6 @@ export const registerUser = async (req, res) => {
   }
 };
 
-// User Login
 
 export const loginUser = async (req, res) => {
   const { email, password } = req.body;
@@ -118,4 +117,35 @@ export const logoutUser = (req, res) => {
       console.error("Logout failed:", error);
       return res.status(500).json(new ApiError(500, "Logout failed"));
   }
+};
+
+
+export const refreshAccessToken = (req, res) => {
+    const refreshToken = req.cookies.refreshToken;
+    if (!refreshToken) return res.status(401).json({ message: "Refresh token required" });
+
+    try {
+        const user = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
+
+        const newAccessToken = generateAccessToken(user);
+        const newRefreshToken = generateRefreshToken(user); 
+
+        res
+          .cookie("accessToken", newAccessToken, {
+              httpOnly: true,
+              secure: true,
+              sameSite: "Strict",
+              maxAge: 24 * 60 * 60 * 1000
+          })
+          .cookie("refreshToken", newRefreshToken, {
+              httpOnly: true,
+              secure: true,
+              sameSite: "Strict",
+              maxAge: 20 * 24 * 60 * 60 * 1000
+          })
+          .json({ accessToken: newAccessToken });
+
+    } catch (error) {
+        return res.status(403).json({ message: "Invalid or expired refresh token" });
+    }
 };
